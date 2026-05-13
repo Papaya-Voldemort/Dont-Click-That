@@ -1,0 +1,32 @@
+{
+  "name": "phishguard",
+  "private": true,
+  "version": "0.0.1",
+  "description": "PhishGuard - Security awareness app built with Svelte and Vite.",
+  "author": "",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:host": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "preview:host": "vite preview --host 0.0.0.0",
+    "check": "svelte-check --tsconfig ./jsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
+    "validate": "npm run check && npm run build",
+    "type-check": "npm run check",
+    "lint:check": "npm run check"
+  },
+  "keywords": [
+    "svelte",
+    "vite",
+    "security",
+    "phishing-awareness"
+  ],
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "svelte": "^5.55.5",
+    "svelte-check": "^4.1.4",
+    "vite": "^8.0.12"
+  }
+}
