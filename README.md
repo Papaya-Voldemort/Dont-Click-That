@@ -1,4 +1,4 @@
-# PhishGuard
+# Don't Click That
 
 A modern security awareness application built with Svelte and Vite. Clean architecture, optimized workflow, and developer-friendly structure.
 
@@ -9,7 +9,7 @@ A modern security awareness application built with Svelte and Vite. Clean archit
 ### Directory Overview
 
 ```
-PhishGuard/
+Don't Click That/
 ├── src/
 │   ├── App.svelte          # Root app component (blank slate)
 │   ├── app.css             # Global styles, layout, colors, spacing
@@ -181,4 +181,4 @@ MIT (or your chosen license)
 ---
 
 **Happy coding! 🎉**
-# PhishGuard
+# Don't Click That
