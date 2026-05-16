@@ -1,7 +1,19 @@
 <script>
   import Card from "../core/Card.svelte";
+  import Button from "../core/Button.svelte";
 
-  const name = "Game Screen";
+  let {
+    name = "Game Screen",
+    leftType = "url",
+    rightType = "grade",
+    ...props
+  } = $props();
+
+  const GradeBtns = [
+    { label: "Safe", variant: "safe" },
+    { label: "Suspicious", variant: "warn" },
+    { label: "Phishing", variant: "danger" },
+  ];
 </script>
 
 <Card>
@@ -11,8 +23,13 @@
       <p>Game content coming soon...</p>
     </div>
     <div class="inside right">
-      <h1>{name}</h1>
-      <p>Game content coming soon...</p>
+      <h1>Grade This URL</h1>
+      {#if rightType === "grade"}
+        {#each GradeBtns as btn}
+          <Button variant={btn.variant} size="hg" style="flex: 1; margin: 1rem 0;">{btn.label}</Button>
+        {/each}
+      {/if}
+      <div class="btn"></div>
     </div>
   </div>
 </Card>
@@ -29,4 +46,9 @@
     width: 100%;
   }
 
+  .right {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
 </style>
