@@ -1,7 +1,7 @@
 <script>
   import SplashScreen from "./lib/components/screens/SplashScreen.svelte";
   import GameScreen from "./lib/components/screens/GameScreen.svelte";
-  import { gameState } from "./lib/stores/game";
+  import { gameState } from "./lib/stores/game"
 </script>
 
 <svelte:head>
@@ -20,5 +20,6 @@
   {/if}
 </main>
 
-<style>
-</style>
+<!-- Add Animations Next Time:
+- git commit a LOT
+-->
