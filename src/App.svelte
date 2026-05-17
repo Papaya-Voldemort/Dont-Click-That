@@ -2,6 +2,8 @@
   import SplashScreen from "./lib/components/screens/SplashScreen.svelte";
   import GameScreen from "./lib/components/screens/GameScreen.svelte";
   import { gameState } from "./lib/stores/game"
+  import HowToPlay from "./lib/components/screens/HowToPlay.svelte";
+  import Info from "./lib/components/screens/Info.svelte";
 </script>
 
 <svelte:head>
@@ -17,6 +19,10 @@
     <SplashScreen />
   {:else if $gameState.screen === "game"}
     <GameScreen />
+  {:else if $gameState.screen === "how"}
+    <HowToPlay />
+  {:else if $gameState.screen === "info"}
+    <Info />
   {/if}
 </main>
 

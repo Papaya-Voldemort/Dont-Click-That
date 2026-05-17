@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Button from "../core/Button.svelte";
   import Card from "../core/Card.svelte";
   import { updateScreen } from "../../stores/game";
@@ -7,9 +7,8 @@
   const subtitle =
     "Train yourself to spot phishing links, scam emails, and suspicious messages through quick interactive challenges.";
 
-  function startGame() {
-    console.log("Start");
-    updateScreen("game");
+  function pressBtn(screen: string) {
+    updateScreen(screen);
   }
 </script>
 
@@ -23,13 +22,17 @@
       </p>
     </div>
 
-    <Button variant="success" size="hg" onclick={startGame}
+    <Button variant="success" size="hg" onclick={() => pressBtn("game")}
       >▶ Start Training</Button
     >
 
     <div class="actions">
-      <Button variant="safe" size="md">How to Play</Button>
-      <Button variant="default" size="md">More Info</Button>
+      <Button variant="safe" size="md" onclick={() => pressBtn("how")}
+        >How to Play</Button
+      >
+      <Button variant="default" size="md" onclick={() => pressBtn("info")}
+        >More Info</Button
+      >
     </div>
   </div>
 </Card>
