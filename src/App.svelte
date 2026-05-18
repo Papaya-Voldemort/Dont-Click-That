@@ -1,9 +1,13 @@
 <script>
   import SplashScreen from "./lib/components/screens/SplashScreen.svelte";
   import GameScreen from "./lib/components/screens/GameScreen.svelte";
-  import { gameState } from "./lib/stores/game"
   import HowToPlay from "./lib/components/screens/HowToPlay.svelte";
   import Info from "./lib/components/screens/Info.svelte";
+
+  import { gameState } from "./lib/stores/game"
+  import { levels } from "./lib/stores/levels"
+
+  const currentLevel = levels[$gameState.currentLv]
 </script>
 
 <svelte:head>

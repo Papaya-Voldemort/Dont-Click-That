@@ -2,24 +2,30 @@
   import Card from "../core/Card.svelte";
   import Button from "../core/Button.svelte";
 
-  let {
-    name = "Game Screen",
-    contentType = "url",
-    content = {
-      url: {
-        protocol: "https://",
-        subdomain: "gooooogle.com",
-        domain: "realsites.xyz",
-      },
-    },
-    ...props
-  } = $props();
+  import { gameState, nextLevel } from "../../stores/game";
+  import { levels } from "../../stores/levels";
+
+  const { contentType, content, scoreValues } = $derived.by(
+    () => levels[$gameState.currentLv],
+  );
+
+  // Type guard for URL content
+  const urlContent = $derived.by(() =>
+    contentType === "url" ? (content as any) : null,
+  );
 
   const GradeBtns = [
-    { label: "Safe", variant: "safe" },
-    { label: "Suspicious", variant: "warn" },
-    { label: "Phishing", variant: "danger" },
+    { label: "Safe", variant: "safe", value: "safe" },
+    { label: "Suspicious", variant: "warn", value: "sus" },
+    { label: "Threat", variant: "danger", value: "threat" },
   ];
+
+  function score(button: string): number {
+    console.log(button);
+    const scoreObj = scoreValues.find((s) => s.name === button);
+    nextLevel()
+    return scoreObj?.value ?? 0;
+  }
 </script>
 
 <Card>
@@ -34,17 +40,18 @@
         <div class="content">
           <span class="urlBar">
             <span class="protocol">
-              {content.url.protocol}
+              {`${urlContent.protocol}://`}
             </span>
 
             <span class="subdomain">
-              {content.url.subdomain}
+              {urlContent.subdomain}
             </span>
 
             <span class="domain">
-              {`.${content.url.domain}`}
+              {`.${urlContent.domain}`}
             </span>
           </span>
+          <!-- Add preview of the webpage here -->
         </div>
       {/if}
     </div>
@@ -54,7 +61,11 @@
       <h1>Grade This URL</h1>
       <div class="grade-btns">
         {#each GradeBtns as btn}
-          <Button variant={btn.variant} size="grade">{btn.label}</Button>
+          <Button
+            variant={btn.variant}
+            size="grade"
+            onclick={() => score(btn.value)}>{btn.label}</Button
+          >
         {/each}
       </div>
     </div>
