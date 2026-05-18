@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { get } from 'svelte/store';
 
 export const gameState = writable({
   screen: 'splash',
@@ -13,4 +14,9 @@ export function updateScreen(screenName: string) {
 
 export function nextLevel() {
   gameState.update(state => ({ ...state, currentLv: state.currentLv + 1 }));
+}
+
+export function updateScore(score: number) {
+  gameState.update(state => ({ ...state, score: state.score + score }));
+  console.log(get(gameState).score)
 }

@@ -2,7 +2,7 @@
   import Card from "../core/Card.svelte";
   import Button from "../core/Button.svelte";
 
-  import { gameState, nextLevel } from "../../stores/game";
+  import { gameState, nextLevel, updateScore } from "../../stores/game";
   import { levels } from "../../stores/levels";
 
   const { contentType, content, scoreValues } = $derived.by(
@@ -20,11 +20,11 @@
     { label: "Threat", variant: "danger", value: "threat" },
   ];
 
-  function score(button: string): number {
+  function score(button: string) {
     console.log(button);
     const scoreObj = scoreValues.find((s) => s.name === button);
     nextLevel()
-    return scoreObj?.value ?? 0;
+    updateScore(scoreObj?.value ?? 0)
   }
 </script>
 
