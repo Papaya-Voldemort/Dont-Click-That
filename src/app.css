@@ -23,8 +23,9 @@
   --text-main: #4b4b4b;
   --text-inverted: #ffffff;
 
-  --display-font: "Outfit";
-  --text-font: "Poppins";
+  --display-font: "Outfit", sans-serif;
+  --text-font: "Poppins", sans-serif;
+  --mono-font: "JetBrains Mono", monospace;
 
   /* Geometry */
   --btn-radius: 16px;

@@ -22,7 +22,7 @@
       </p>
     </div>
 
-    <Button variant="success" size="hg" onclick={() => pressBtn("game")}
+    <Button variant="success" size="xl" onclick={() => pressBtn("game")}
       >▶ Start Training</Button
     >
 

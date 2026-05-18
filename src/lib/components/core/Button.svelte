@@ -154,10 +154,17 @@
     --btn-depth: 5px;
   }
 
-  .btn[data-size="hg"] {
+  .btn[data-size="xl"] {
     --btn-padding-y: 32px;
     --btn-padding-x: 64px;
     --btn-font-size: 2rem;
+    --btn-depth: 10px;
+  }
+
+  .btn[data-size="grade"] {
+    --btn-padding-y: 64px;
+    --btn-padding-x: 64px;
+    --btn-font-size: 3rem;
     --btn-depth: 10px;
   }
 
