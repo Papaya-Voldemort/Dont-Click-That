@@ -45,7 +45,7 @@
         </div>
 
         <div class="content">
-          <SitePreview isWireframe={true}>
+          <SitePreview isWireframe={true} url={urlContent}>
             <span>No Content</span>
           </SitePreview>
         </div>

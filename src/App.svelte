@@ -5,11 +5,13 @@
   import Info from "./lib/components/screens/Info.svelte";
   import WinScreen from "./lib/components/screens/WinScreen.svelte";
 
-  import { gameState } from "./lib/stores/game"
-  import { levels } from "./lib/stores/levels"
+  import { gameState } from "./lib/stores/game";
+  import { levels } from "./lib/stores/levels";
   import InfoScreen from "./lib/components/screens/InfoScreen.svelte";
 
-  const currentLevel = levels[$gameState.currentLv]
+  import { slide } from "svelte/transition";
+
+  const currentLevel = levels[$gameState.currentLv];
 </script>
 
 <svelte:head>
@@ -22,17 +24,29 @@
 
 <main>
   {#if $gameState.screen === "splash"}
-    <SplashScreen />
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <SplashScreen />
+    </div>
   {:else if $gameState.screen === "game"}
-    <GameScreen />
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <GameScreen />
+    </div>
   {:else if $gameState.screen === "how"}
-    <HowToPlay />
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <HowToPlay />
+    </div>
   {:else if $gameState.screen === "Gameinfo"}
-    <Info />
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <Info />
+    </div>
   {:else if $gameState.screen === "win"}
-    <WinScreen />
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <WinScreen />
+    </div>
   {:else if $gameState.screen === "info"}
-    <InfoScreen />
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <InfoScreen />
+    </div>
   {/if}
 </main>
 
