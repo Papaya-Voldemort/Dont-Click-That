@@ -14,6 +14,7 @@
     <h1>Congrats!</h1>
     <h2>You won!</h2>
     <span>Score {score}/{outOf}</span>
+    <Button variant="success" size="lg" style="margin: 2rem" onclick={() => updateScreen("splash")}>Play Again</Button>
   </div>
 </Card>
 
