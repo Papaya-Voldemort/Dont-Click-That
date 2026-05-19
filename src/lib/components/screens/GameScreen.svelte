@@ -10,6 +10,7 @@
     updateScreen,
   } from "../../stores/game";
   import { levels } from "../../stores/levels";
+  import TextPreview from "../widgets/TextPreview.svelte";
 
   const { contentType, content, scoreValues } = $derived.by(
     () => levels[$gameState.currentLv],
@@ -49,6 +50,14 @@
             <span>No Content</span>
           </SitePreview>
         </div>
+      {:else if contentType === "text"}
+        <div class="header">
+          <h1>How risky is this?</h1>
+        </div>
+
+        <div class="content">
+          <TextPreview messages={content as any} />
+        </div>
       {/if}
     </div>
 
@@ -67,6 +76,11 @@
     </div>
   </div>
 </Card>
+
+<!-- TODO:
+ Add Full Site category
+ Add texts
+ add emails -->
 
 <!-- TODO: Add intiactor of what level it is -->
 
@@ -87,6 +101,9 @@
 
   .left {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .right {
@@ -109,6 +126,7 @@
     padding: 0;
     margin-top: 0;
     flex-direction: column;
+    flex: 1;
   }
 
   .grade-btns {
@@ -120,6 +138,6 @@
   }
 
   .right h1 {
-    margin: 0 0 .5rem 0;
+    margin: 0 0 0.5rem 0;
   }
 </style>
