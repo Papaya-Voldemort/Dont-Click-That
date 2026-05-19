@@ -2,11 +2,14 @@ import { writable } from 'svelte/store';
 import { get } from 'svelte/store';
 import { levels } from './levels';
 
+const levelCnt = levels.length;
+
 export const gameState = writable({
   screen: 'splash',
-  levels: 3,
+  levels: levelCnt,
   currentLv: 0,
   score: 0,
+  lastButtonPressed: '',
 });
 
 export function updateScreen(screenName: string) {
@@ -14,10 +17,12 @@ export function updateScreen(screenName: string) {
 }
 
 export function nextLevel() {
-  if (get(gameState).levels - 1 === get(gameState).currentLv) {
+  const currentState = get(gameState);
+  if (currentState.currentLv >= currentState.levels - 1) {
     updateScreen("win");
-    return
+    return;
   }
+  gameState.update(state => ({ ...state, screen: "game"}))
   gameState.update(state => ({ ...state, currentLv: state.currentLv + 1 }));
 }
 

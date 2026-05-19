@@ -7,6 +7,7 @@
 
   import { gameState } from "./lib/stores/game"
   import { levels } from "./lib/stores/levels"
+  import InfoScreen from "./lib/components/screens/InfoScreen.svelte";
 
   const currentLevel = levels[$gameState.currentLv]
 </script>
@@ -26,10 +27,12 @@
     <GameScreen />
   {:else if $gameState.screen === "how"}
     <HowToPlay />
-  {:else if $gameState.screen === "info"}
+  {:else if $gameState.screen === "Gameinfo"}
     <Info />
   {:else if $gameState.screen === "win"}
     <WinScreen />
+  {:else if $gameState.screen === "info"}
+    <InfoScreen />
   {/if}
 </main>
 

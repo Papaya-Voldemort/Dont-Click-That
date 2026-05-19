@@ -30,7 +30,7 @@
       <Button variant="safe" size="md" onclick={() => pressBtn("how")}
         >How to Play</Button
       >
-      <Button variant="default" size="md" onclick={() => pressBtn("info")}
+      <Button variant="default" size="md" onclick={() => pressBtn("Gameinfo")}
         >More Info</Button
       >
     </div>

@@ -2,7 +2,12 @@
   import Card from "../core/Card.svelte";
   import Button from "../core/Button.svelte";
 
-  import { gameState, nextLevel, updateScore } from "../../stores/game";
+  import {
+    gameState,
+    nextLevel,
+    updateScore,
+    updateScreen,
+  } from "../../stores/game";
   import { levels } from "../../stores/levels";
 
   const { contentType, content, scoreValues } = $derived.by(
@@ -23,8 +28,9 @@
   function score(button: string) {
     console.log(button);
     const scoreObj = scoreValues.find((s) => s.name === button);
-    nextLevel()
-    updateScore(scoreObj?.value ?? 0)
+    gameState.update((state) => ({ ...state, lastButtonPressed: button }));
+    updateScore(scoreObj?.value ?? 0);
+    updateScreen("info");
   }
 </script>
 
@@ -44,11 +50,15 @@
             </span>
 
             <span class="subdomain">
-              {urlContent.subdomain}
+              {#if urlContent.subdomain != ""}
+                {`${urlContent.subdomain}.`}
+              {:else}
+                {urlContent.subdomain}
+              {/if}
             </span>
 
             <span class="domain">
-              {`.${urlContent.domain}`}
+              {urlContent.domain}
             </span>
           </span>
           <!-- Add preview of the webpage here -->
@@ -71,6 +81,8 @@
     </div>
   </div>
 </Card>
+
+<!-- TODO: Add intiactor of what level it is -->
 
 <style>
   .main {

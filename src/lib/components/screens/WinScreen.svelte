@@ -11,7 +11,7 @@
 
 <Card>
   <div class="main">
-    <h1>Contrats!</h1>
+    <h1>Congrats!</h1>
     <h2>You won!</h2>
     <span>Score {score}/{outOf}</span>
   </div>
