@@ -49,5 +49,3 @@
     </div>
   {/if}
 </main>
-
-<!-- TODO: Add Animations Next Time -->
