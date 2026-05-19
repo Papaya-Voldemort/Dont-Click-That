@@ -1,11 +1,11 @@
 // Production-hardened Bun static server for Vite-built Svelte app (dist)
-import { join } from 'node:path'
-
 const PORT = Number(process.env.PORT || 3000)
-// Use process.cwd() so the dist folder is always resolved relative to the
-// project root — works correctly in both local dev and Railway containers
-// where import.meta.url can resolve to an unexpected path.
-const DIST = join(process.cwd(), 'dist')
+const DIST = `${process.cwd()}/dist`
+
+function resolveDistPath(pathname) {
+  const safePath = pathname.replace(/\/+/g, '/')
+  return `${DIST}${safePath}`
+}
 
 // In-memory short-lived cache to avoid excessive stat() calls per-request
 const FILE_CACHE_TTL = 60_000 // 60s
@@ -55,6 +55,7 @@ const IMMUTABLE_HASH_RE = /[\.\-]([a-f0-9]{8,})/i
 
 const server = Bun.serve({
   port: PORT,
+  hostname: '0.0.0.0',
   async fetch(req) {
     try {
       const url = new URL(req.url)
@@ -65,7 +66,7 @@ const server = Bun.serve({
 
       if (pathname === '/') pathname = '/index.html'
 
-      const filePath = join(DIST, pathname)
+      const filePath = resolveDistPath(pathname)
 
       // Fast path: if file is known to exist (cached), serve it
       if (checkFileCached(filePath)) {
@@ -81,7 +82,7 @@ const server = Bun.serve({
       }
 
       // SPA fallback: serve index.html for any non-asset route
-      const indexPath = join(DIST, 'index.html')
+      const indexPath = resolveDistPath('/index.html')
       if (checkFileCached(indexPath)) {
         return new Response(Bun.file(indexPath), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-cache, no-store, must-revalidate' } })
       }
