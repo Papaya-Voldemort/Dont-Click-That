@@ -1,6 +1,11 @@
 // Production-hardened Bun static server for Vite-built Svelte app (dist)
+import { join } from 'node:path'
+
 const PORT = Number(process.env.PORT || 3000)
-const DIST = new URL('./dist/', import.meta.url).pathname
+// Use process.cwd() so the dist folder is always resolved relative to the
+// project root — works correctly in both local dev and Railway containers
+// where import.meta.url can resolve to an unexpected path.
+const DIST = join(process.cwd(), 'dist')
 
 // In-memory short-lived cache to avoid excessive stat() calls per-request
 const FILE_CACHE_TTL = 60_000 // 60s
@@ -60,7 +65,7 @@ const server = Bun.serve({
 
       if (pathname === '/') pathname = '/index.html'
 
-      const filePath = DIST + pathname
+      const filePath = join(DIST, pathname)
 
       // Fast path: if file is known to exist (cached), serve it
       if (checkFileCached(filePath)) {
@@ -76,7 +81,7 @@ const server = Bun.serve({
       }
 
       // SPA fallback: serve index.html for any non-asset route
-      const indexPath = DIST + '/index.html'
+      const indexPath = join(DIST, 'index.html')
       if (checkFileCached(indexPath)) {
         return new Response(Bun.file(indexPath), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-cache, no-store, must-revalidate' } })
       }
