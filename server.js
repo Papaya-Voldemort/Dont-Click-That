@@ -7,6 +7,8 @@ function resolveDistPath(pathname) {
   return `${DIST}${safePath}`
 }
 
+import { statSync } from 'fs'
+
 // In-memory short-lived cache to avoid excessive stat() calls per-request
 const FILE_CACHE_TTL = 60_000 // 60s
 const fileExistsCache = new Map()
@@ -19,8 +21,8 @@ function checkFileCached(path) {
   const entry = fileExistsCache.get(path)
   if (entry && now() - entry.ts < FILE_CACHE_TTL) return entry.exists
   try {
-    const s = Bun.statSync(path)
-    const exists = !!s && s.isFile
+    const s = statSync(path)
+    const exists = !!s && s.isFile()
     fileExistsCache.set(path, { exists, ts: now() })
     return exists
   } catch {
