@@ -76,10 +76,6 @@
     overflow: hidden;
   }
 
-  .lock-icon {
-    margin-right: 8px;
-    font-size: 0.8rem;
-  }
   .protocol {
     color: #888;
   }
