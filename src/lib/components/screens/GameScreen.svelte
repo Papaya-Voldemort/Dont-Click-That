@@ -63,7 +63,6 @@
 
     <!-- Start of right side -->
     <div class="inside right">
-      <h1>Grade This URL</h1>
       <div class="grade-btns">
         {#each GradeBtns as btn}
           <Button
@@ -89,7 +88,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 2rem; /* Keeps a healthy separation between columns */
+    gap: 2rem;
+    align-items: stretch;
+    height: 100%;
   }
 
   .inside {
@@ -97,6 +98,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 100%;
   }
 
   .left {
@@ -104,14 +106,19 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
   }
 
   .right {
     text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    min-height: 100%;
   }
 
-  .header,
-  .right h1 {
+  .header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -122,7 +129,7 @@
   .content {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 0;
     margin-top: 0;
     flex-direction: column;
@@ -132,12 +139,9 @@
   .grade-btns {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 4.5rem;
+    justify-content: space-between;
+    gap: 2rem;
     margin-top: 1rem;
-  }
-
-  .right h1 {
-    margin: 0 0 0.5rem 0;
+    height: 100%;
   }
 </style>

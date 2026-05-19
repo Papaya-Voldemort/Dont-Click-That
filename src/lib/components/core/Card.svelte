@@ -20,7 +20,6 @@
 
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
 
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -29,5 +28,7 @@
     transition:
       width 0.5s ease,
       height 0.5s ease;
+
+    overflow: none;
   }
 </style>
