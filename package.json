@@ -7,18 +7,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:host": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "preview:host": "vite preview --host 0.0.0.0",
-    "start": "NODE_ENV=production node server.js",
-    "start:prod": "bun run build && NODE_ENV=production bun server.js",
-    "deploy": "bun run validate && bun run start:prod",
+    "start": "NODE_ENV=production bun server.js",
     "check": "svelte-check --tsconfig ./jsconfig.json",
-    "check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
-    "validate": "bun run check && bun run build",
     "type-check": "bun run check",
-    "lint:check": "bun run check"
+    "validate": "bun run type-check && bun run build"
   },
   "keywords": [
     "svelte",
@@ -32,9 +26,6 @@
     "svelte-check": "^4.1.4",
     "vite": "^8.0.12",
     "@types/bun": "latest",
-    "express": "^4.18.2"
-  },
-  "peerDependencies": {
     "typescript": "^5"
   }
 }
