@@ -61,35 +61,61 @@ import { logoImage } from './lib/assets/images/index.js'
 
 ## 📦 Scripts & Commands
 
-All npm scripts are optimized for your workflow:
+All bun scripts are optimized for your workflow:
 
 | Command | Purpose |
 |---------|---------|
-| `npm run dev` | Start dev server (localhost:5173) |
-| `npm run dev:host` | Dev server on 0.0.0.0 (network access) |
-| `npm run build` | Production build to `dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run preview:host` | Preview on 0.0.0.0 (network access) |
-| `npm run check` | Type-check Svelte files |
-| `npm run check:watch` | Watch mode type-checking |
-| `npm run validate` | Full check: type-check + build test |
-| `npm run type-check` | Alias for `check` |
-| `npm run lint:check` | Alias for `check` |
+| `bun dev` | Start dev server (localhost:5173) |
+| `bun dev --host` | Dev server on 0.0.0.0 (network access) |
+| `bun build` | Production build to `dist/` |
+| `bun preview` | Preview production build locally |
+| `bun preview --host` | Preview on 0.0.0.0 (network access) |
+| `bun start` | Run production server (requires `bun build` first) |
+| `bun start:prod` | Build and run production server in one step |
+| `bun deploy` | Full validation, build, and production deployment |
+| `bun check` | Type-check Svelte files |
+| `bun check:watch` | Watch mode type-checking |
+| `bun validate` | Full check: type-check + build test |
+| `bun type-check` | Alias for `check` |
+| `bun lint:check` | Alias for `check` |
 
-### Workflow
+### Development Workflow
 ```bash
 # Daily development
-npm run dev                 # Start, make changes (auto-reloads)
-npm run check              # Check for errors before commit
-npm run build              # Test production build
+bun dev                    # Start, make changes (auto-reloads)
+bun check                  # Check for errors before commit
+bun build                  # Test production build
 
 # Full validation before merge
-npm run validate           # Type-check + build (comprehensive)
+bun validate               # Type-check + build (comprehensive)
 
 # Sharing your work locally
-npm run dev:host           # Share on network
-npm run preview:host       # Preview production on network
+bun dev --host             # Share on network
+bun preview --host         # Preview production on network
 ```
+
+### Production Deployment
+```bash
+# Simple deployment (uses default port 3000)
+bun start:prod
+
+# Custom port
+PORT=8080 bun start:prod
+
+# Custom host and port (for network access)
+HOST=0.0.0.0 PORT=8080 bun start:prod
+
+# Full deployment pipeline with validation
+bun deploy
+```
+
+#### Environment Variables
+Create a `.env` file based on [`.env.example`](.env.example) to customize:
+- `PORT` — Server port (default: 3000)
+- `HOST` — Server host binding (default: localhost)
+- `NODE_ENV` — Environment mode (default: production)
+
+
 
 ---
 
