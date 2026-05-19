@@ -1,6 +1,7 @@
 <script lang="ts">
   import Card from "../core/Card.svelte";
   import Button from "../core/Button.svelte";
+  import SitePreview from "../widgets/SitePreview.svelte";
 
   import {
     gameState,
@@ -44,24 +45,9 @@
         </div>
 
         <div class="content">
-          <span class="urlBar">
-            <span class="protocol">
-              {`${urlContent.protocol}://`}
-            </span>
-
-            <span class="subdomain">
-              {#if urlContent.subdomain != ""}
-                {`${urlContent.subdomain}.`}
-              {:else}
-                {urlContent.subdomain}
-              {/if}
-            </span>
-
-            <span class="domain">
-              {urlContent.domain}
-            </span>
-          </span>
-          <!-- Add preview of the webpage here -->
+          <SitePreview isWireframe={true}>
+            <span>No Content</span>
+          </SitePreview>
         </div>
       {/if}
     </div>
@@ -122,6 +108,7 @@
     align-items: flex-start;
     padding: 0;
     margin-top: 0;
+    flex-direction: column;
   }
 
   .grade-btns {
@@ -129,52 +116,10 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 4.5rem;
+    margin-top: 1rem;
   }
 
-  .urlBar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-    padding: 0.9rem 1.2rem;
-    background-color: var(--bg-app);
-    border: 3px solid var(--color-gray);
-    border-radius: 16px;
-    font-family: var(--mono-font);
-    font-size: 1.1rem;
-    color: var(--text-main);
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    user-select: text;
-    cursor: text;
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease;
-  }
-
-  .urlBar:hover {
-    border-color: var(--color-gray-dark);
-    background-color: var(--card-border);
-  }
-
-  /* .urlBar::before {
-    content: "🔒";
-    margin-right: 0.75rem;
-    font-size: 1rem;
-    filter: grayscale(
-      100%
-    );
-    opacity: 0.6;
-  } */
-
-  .protocol {
-    color: var(--color-gray);
-  }
-
-  .domain,
-  .subdomain {
-    color: var(--text-main);
+  .right h1 {
+    margin: 0 0 .5rem 0;
   }
 </style>

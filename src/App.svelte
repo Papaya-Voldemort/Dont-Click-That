@@ -36,6 +36,4 @@
   {/if}
 </main>
 
-<!-- Add Animations Next Time:
-- git commit a LOT
--->
+<!-- TODO: Add Animations Next Time -->
