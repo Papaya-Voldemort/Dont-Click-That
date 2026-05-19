@@ -16,7 +16,9 @@
           variant="danger"
           size="md"
           style="width: 75px;"
-          onclick={() => {updateScreen("splash")}}>X</Button
+          onclick={() => {
+            updateScreen("splash");
+          }}>X</Button
         >
       </div>
     </div>

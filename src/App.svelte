@@ -3,6 +3,7 @@
   import GameScreen from "./lib/components/screens/GameScreen.svelte";
   import HowToPlay from "./lib/components/screens/HowToPlay.svelte";
   import Info from "./lib/components/screens/Info.svelte";
+  import WinScreen from "./lib/components/screens/WinScreen.svelte";
 
   import { gameState } from "./lib/stores/game"
   import { levels } from "./lib/stores/levels"
@@ -27,6 +28,8 @@
     <HowToPlay />
   {:else if $gameState.screen === "info"}
     <Info />
+  {:else if $gameState.screen === "win"}
+    <WinScreen />
   {/if}
 </main>
 
