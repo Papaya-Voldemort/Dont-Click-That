@@ -30,3 +30,8 @@ export function updateScore(score: number) {
   gameState.update(state => ({ ...state, score: state.score + score }));
   console.log(get(gameState).score)
 }
+
+export function resetGame() {
+  gameState.update(state => ({ ...state, currentLv: 0 }));
+  console.log(get(gameState).currentLv)
+}

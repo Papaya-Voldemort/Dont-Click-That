@@ -3,7 +3,7 @@
 
   import Button from "../core/Button.svelte";
   import Card from "../core/Card.svelte";
-  import { updateScreen, gameState } from "../../stores/game";
+  import { updateScreen, gameState, resetGame } from "../../stores/game";
 
   const score = get(gameState).score;
   const outOf = get(gameState).levels;
@@ -14,7 +14,7 @@
     <h1>Congrats!</h1>
     <h2>You won!</h2>
     <span>Score {score}/{outOf}</span>
-    <Button variant="success" size="lg" style="margin: 2rem" onclick={() => updateScreen("splash")}>Play Again</Button>
+    <Button variant="success" size="lg" style="margin: 2rem" onclick={() => {updateScreen("splash"); resetGame()}}>Play Again</Button>
   </div>
 </Card>
 
