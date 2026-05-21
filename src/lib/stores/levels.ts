@@ -21,7 +21,15 @@ type text = {
   content: string;
 }
 
-type content = url | site | text[];
+type email = {
+  sender: string;
+  email: string;
+  subject: string;
+  preview: string;
+  time: string;
+}
+
+type content = url | site | text[] | email;
 
 
 type level = {
@@ -31,6 +39,33 @@ type level = {
 }
 
 export const levels: level[] = [
+  {
+    contentType: "email",
+    content: {
+      sender: "Netflix Support",
+      email: "billing@netfliix-security.com",
+      subject: "Your subscription has been suspended",
+      preview: "We detected a billing issue. Verify your payment information immediately to avoid account deletion.",
+      time: "2:14 PM",
+    },
+    scoreValues: [
+      {
+        name: "safe",
+        value: 0,
+        feedback: "Incorrect. The sender domain uses 'netfliix' with two i's — a common phishing trick.",
+      },
+      {
+        name: "sus",
+        value: 0.5,
+        feedback: "Good instinct. The urgent tone and fake-looking domain are major warning signs.",
+      },
+      {
+        name: "threat",
+        value: 1,
+        feedback: "Correct! This is a phishing email using brand impersonation and urgency tactics.",
+      },
+    ],
+  },
   {
     contentType: "url",
     content: {

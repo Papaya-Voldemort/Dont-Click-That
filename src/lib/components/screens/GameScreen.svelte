@@ -11,6 +11,7 @@
   } from "../../stores/game";
   import { levels } from "../../stores/levels";
   import TextPreview from "../widgets/TextPreview.svelte";
+  import EmailPreview from "../widgets/EmailPreview.svelte";
 
   const { contentType, content, scoreValues } = $derived.by(
     () => levels[$gameState.currentLv],
@@ -58,6 +59,14 @@
         <div class="content">
           <TextPreview messages={content as any} />
         </div>
+      {:else if contentType === "email"}
+      <div class="header">
+        <h1>How risky is this?</h1>
+      </div>
+
+      <div class="content">
+        <EmailPreview emailInfo={content}/>
+      </div>
       {/if}
     </div>
 
