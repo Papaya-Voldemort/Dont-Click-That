@@ -14,7 +14,6 @@
 
 <div class="emails">
   <div class="email">
-    <!-- Header: Subject + Tags -->
     <div class="email-header">
       <h2 class="subject">{emailInfo.subject}</h2>
       <div class="tags">
@@ -23,7 +22,6 @@
       </div>
     </div>
 
-    <!-- Meta Bar: Avatar, Sender, Time, Actions -->
     <div class="email-meta">
       <div class="avatar" data-initial="P"></div>
 
@@ -45,8 +43,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Body -->
     <div class="email-body">
       <p>{emailInfo.preview}</p>
       <p>{emailInfo.body}</p>
@@ -73,7 +69,6 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   }
 
-  /* Header: Subject line + tags */
   .email-header {
     display: flex;
     align-items: center;
@@ -117,7 +112,6 @@
     color: #4b5563;
   }
 
-  /* Meta bar: Avatar, sender, time */
   .email-meta {
     display: flex;
     align-items: start;
@@ -224,7 +218,6 @@
     margin-bottom: 0;
   }
 
-  /* Dark mode */
   @media (prefers-color-scheme: dark) {
     .email {
       background: #1f2937;
