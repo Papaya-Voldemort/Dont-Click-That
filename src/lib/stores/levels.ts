@@ -234,7 +234,7 @@ export const levels: level[] = [
     content: {
       protocol: "https",
       subdomain: "",
-      domain: "аpple.com", // Trick: Uses Cyrillic 'а' which looks identical to Latin 'a'
+      domain: "аpple.com",
     },
     scoreValues: [
       { name: "safe", value: 0, feedback: "Oh wow, this is a master trick! That 'a' is actually a foreign alphabet character designed to look exactly like ours." },

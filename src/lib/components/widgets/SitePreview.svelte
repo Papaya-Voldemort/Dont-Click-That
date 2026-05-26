@@ -43,7 +43,7 @@
   }
 
   .browser-bar {
-    background: #f9f9f9;
+    background: var(--bg-subtle);
     padding: 10px;
     display: flex;
     align-items: center;
@@ -59,7 +59,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #ddd;
+    background: var(--border-divider);
   }
 
   .urlBar {
@@ -77,11 +77,11 @@
   }
 
   .protocol {
-    color: #888;
+    color: var(--text-muted);
   }
   .domain {
     font-weight: 700;
-    color: #222;
+    color: var(--text-brand-dark);
   }
 
   .content-area {
@@ -91,7 +91,7 @@
 
   /* Wireframe Styles */
   .wireframe .wf-box {
-    background: #e0e0e0;
+    background: var(--bg-wireframe);
     margin-bottom: 12px;
     border-radius: 4px;
   }

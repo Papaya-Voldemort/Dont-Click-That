@@ -56,8 +56,8 @@
 
   .input {
     padding: 0.75rem;
-    border-top: 1px solid #ddd;
-    color: #888;
+    border-top: 1px solid var(--border-divider);
+    color: var(--text-muted);
     margin: 1rem;
     border-radius: var(--btn-radius);
   }

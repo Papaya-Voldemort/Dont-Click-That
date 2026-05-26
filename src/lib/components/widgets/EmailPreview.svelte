@@ -62,7 +62,7 @@
   }
 
   .email {
-    background: #ffffff;
+    background: var(--surface-primary);
     border: 1px solid var(--card-border);
     border-radius: var(--card-radius);
     padding: 1.5rem 2rem;
@@ -103,13 +103,13 @@
   }
 
   .tag-external {
-    background: #ffc800;
-    color: #1f2937;
+    background: var(--color-warn);
+    color: var(--text-dark-high);
   }
 
   .tag-inbox {
-    background: #e5e7eb;
-    color: #4b5563;
+    background: var(--card-border);
+    color: var(--text-secondary);
   }
 
   .email-meta {
@@ -118,7 +118,7 @@
     gap: 0.875rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--border-divider);
   }
 
   .avatar {
@@ -155,14 +155,14 @@
 
   .sender-email {
     font-weight: 400;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.875rem;
     margin-left: 0.25rem;
   }
 
   .to-line {
     font-size: 0.8125rem;
-    color: #9ca3af;
+    color: var(--text-tertiary);
     margin-top: 0.125rem;
   }
 
@@ -175,7 +175,7 @@
 
   .time {
     font-size: 0.8125rem;
-    color: #9ca3af;
+    color: var(--text-tertiary);
     font-variant-numeric: tabular-nums;
   }
 
@@ -195,12 +195,12 @@
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-    color: #6b7280;
+    color: var(--text-secondary);
     transition: background 0.15s;
   }
 
   .action-btn:hover {
-    background: #f3f4f6;
+    background: var(--state-hover);
   }
 
   /* Body */

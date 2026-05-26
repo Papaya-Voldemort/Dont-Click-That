@@ -70,11 +70,7 @@
 <style>
   .main {
     border: solid 4px var(--theme-color);
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.9),
-      rgba(245, 245, 245, 0.3)
-    );
+    background: var(--gradient-light);
     padding: 2rem;
     border-radius: 16px;
     display: flex;
