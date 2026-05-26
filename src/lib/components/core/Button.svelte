@@ -163,10 +163,10 @@
   }
 
   .btn[data-size="grade"] {
-    --btn-padding-y: 64px;
-    --btn-padding-x: 64px;
-    --btn-font-size: 3rem;
-    --btn-depth: 10px;
+    --btn-padding-y: clamp(0.9rem, 2.4vw, 1.4rem);
+    --btn-padding-x: clamp(0.75rem, 2vw, 1.25rem);
+    --btn-font-size: clamp(0.95rem, 1.8vw, 1.5rem);
+    --btn-depth: clamp(3px, 0.8vw, 8px);
   }
 
   /* Focus states */

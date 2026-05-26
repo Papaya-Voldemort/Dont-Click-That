@@ -39,8 +39,7 @@
 
 <Card>
   <div class="main">
-    <!-- Start of left side -->
-    <div class="inside left">
+    <div class="content-panel">
       {#if contentType === "url"}
         <div class="header">
           <h1>Is this URL safe?</h1>
@@ -60,23 +59,23 @@
           <TextPreview messages={content as any} />
         </div>
       {:else if contentType === "email"}
-      <div class="header">
-        <h1>How risky is this?</h1>
-      </div>
+        <div class="header">
+          <h1>How risky is this?</h1>
+        </div>
 
-      <div class="content">
-        <EmailPreview emailInfo={content}/>
-      </div>
+        <div class="content">
+          <EmailPreview emailInfo={content} />
+        </div>
       {/if}
     </div>
 
-    <!-- Start of right side -->
-    <div class="inside right">
+    <div class="actions">
       <div class="grade-btns">
         {#each GradeBtns as btn}
           <Button
             variant={btn.variant}
             size="grade"
+            style="--btn-width: 100%;"
             onclick={() => score(btn.value)}>{btn.label}</Button
           >
         {/each}
@@ -85,46 +84,23 @@
   </div>
 </Card>
 
-<!-- TODO:
- Add Full Site category
- Add texts
- add emails -->
-
-<!-- TODO: Add intiactor of what level it is -->
-
 <style>
   .main {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 2rem;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.75rem);
     align-items: stretch;
     height: 100%;
+    min-height: 0;
   }
 
-  .inside {
-    flex: 1;
+  .content-panel {
+    flex: 1 1 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
-  }
-
-  .left {
+    min-height: 0;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-  }
-
-  .right {
-    text-align: center;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    min-height: 100%;
   }
 
   .header {
@@ -133,6 +109,7 @@
     align-items: center;
     height: 4rem;
     margin: 0 0 1rem 0;
+    font-size: 2rem;
   }
 
   .content {
@@ -143,14 +120,36 @@
     margin-top: 0;
     flex-direction: column;
     flex: 1;
+    min-height: 0;
+  }
+
+  .actions {
+    margin-top: auto;
   }
 
   .grade-btns {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 1rem;
-    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    align-items: stretch;
+  }
+
+  .grade-btns :global(.btn) {
+    width: 100%;
+  }
+
+  @media (max-width: 720px) {
+    .main {
+      gap: 1rem;
+    }
+
+    .header {
+      height: auto;
+      margin-bottom: 0.75rem;
+    }
+
+    .grade-btns {
+      gap: 0.5rem;
+    }
   }
 </style>
