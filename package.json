@@ -12,7 +12,9 @@
     "start": "NODE_ENV=production bun server.js",
     "check": "svelte-check --tsconfig ./jsconfig.json",
     "type-check": "bun run check",
-    "validate": "bun run type-check && bun run build"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "bun run format:check && bun run type-check && bun run build"
   },
   "keywords": [
     "svelte",
@@ -22,10 +24,12 @@
   ],
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@types/bun": "latest",
+    "prettier": "^3.8.4",
+    "prettier-plugin-svelte": "^4.1.1",
     "svelte": "^5.55.5",
     "svelte-check": "^4.1.4",
-    "vite": "^8.0.12",
-    "@types/bun": "latest",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^8.0.12"
   }
 }

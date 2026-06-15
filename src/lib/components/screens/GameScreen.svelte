@@ -2,25 +2,17 @@
   import Card from "../core/Card.svelte";
   import Button from "../core/Button.svelte";
   import SitePreview from "../widgets/SitePreview.svelte";
-
-  import {
-    gameState,
-    nextLevel,
-    updateScore,
-    updateScreen,
-  } from "../../stores/game";
+  import { gameState, nextLevel, updateScore, updateScreen } from "../../stores/game";
   import { levels } from "../../stores/levels";
   import TextPreview from "../widgets/TextPreview.svelte";
   import EmailPreview from "../widgets/EmailPreview.svelte";
 
-  const { contentType, content, scoreValues } = $derived.by(
-    () => levels[$gameState.currentLv],
-  );
+  const progressPercent = $derived(($gameState.currentLv / $gameState.levels) * 100);
+
+  const { contentType, content, scoreValues } = $derived.by(() => levels[$gameState.currentLv]);
 
   // Type guard for URL content
-  const urlContent = $derived.by(() =>
-    contentType === "url" ? (content as any) : null,
-  );
+  const urlContent = $derived.by(() => (contentType === "url" ? (content as any) : null));
 
   const GradeBtns = [
     { label: "Safe", variant: "safe", value: "safe" },

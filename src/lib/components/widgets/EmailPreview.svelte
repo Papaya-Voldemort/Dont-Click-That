@@ -4,8 +4,7 @@
       sender: "PayPal Security",
       email: "security-alert@paypa1-verification.com",
       subject: "Urgent: Suspicious Login Attempt Detected",
-      preview:
-        "Your account has been temporarily limited. Verify now to restore access.",
+      preview: "Your account has been temporarily limited. Verify now to restore access.",
       time: "Mon, May 11, 1:50 PM",
       body: "We noticed unusual activity on your account. Please verify your identity immediately to prevent permanent suspension.",
     },
@@ -23,7 +22,10 @@
     </div>
 
     <div class="email-meta">
-      <div class="avatar" data-initial="P"></div>
+      <div
+        class="avatar"
+        data-initial={emailInfo.sender ? emailInfo.sender[0].toUpperCase() : "?"}
+      ></div>
 
       <div class="sender-block">
         <div class="sender-name">

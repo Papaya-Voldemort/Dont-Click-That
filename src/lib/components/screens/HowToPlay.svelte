@@ -3,7 +3,7 @@
   import Button from "../core/Button.svelte";
 
   import { updateScreen } from "../../stores/game";
-  
+
   const name = "How to Play";
 </script>
 

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { get } from "svelte/store";
-
   import Button from "../core/Button.svelte";
   import Card from "../core/Card.svelte";
   import { updateScreen, gameState, resetGame } from "../../stores/game";
 
-  const score = get(gameState).score;
-  const outOf = get(gameState).levels;
+  const score = $gameState.score;
+  const outOf = $gameState.levels;
 </script>
 
 <Card>
@@ -14,9 +12,19 @@
     <h1>Congrats!</h1>
     <h2>You won!</h2>
     <span>Score {score}/{outOf}</span>
-    <Button variant="success" size="lg" style="margin: 2rem" onclick={() => {updateScreen("splash"); resetGame()}}>Play Again</Button>
+    <Button
+      variant="success"
+      size="lg"
+      style="margin: 2rem"
+      onclick={() => {
+        updateScreen("splash");
+        resetGame();
+      }}>Play Again</Button
+    >
   </div>
 </Card>
+
+<!-- Make the win screen look decent -->
 
 <style>
   .main {
@@ -44,8 +52,6 @@
     font-size: 1rem;
     margin: 0;
     padding: 0;
-    color: var(--text-main)
+    color: var(--text-main);
   }
 </style>
-
-<!-- Make the win screen look decent -->

@@ -4,10 +4,12 @@
   import HowToPlay from "./lib/components/screens/HowToPlay.svelte";
   import Info from "./lib/components/screens/Info.svelte";
   import WinScreen from "./lib/components/screens/WinScreen.svelte";
+  import NotFound from "./lib/components/screens/404.svelte";
+  import DeepDive from "./lib/components/screens/DeepDive.svelte";
+  import InfoScreen from "./lib/components/screens/InfoScreen.svelte";
 
   import { gameState } from "./lib/stores/game";
   import { levels } from "./lib/stores/levels";
-  import InfoScreen from "./lib/components/screens/InfoScreen.svelte";
 
   import { slide } from "svelte/transition";
 
@@ -35,7 +37,7 @@
     <div transition:slide={{ duration: 200 }} class="screen-wrapper">
       <HowToPlay />
     </div>
-  {:else if $gameState.screen === "Gameinfo"}
+  {:else if $gameState.screen === "gameInfo"}
     <div transition:slide={{ duration: 200 }} class="screen-wrapper">
       <Info />
     </div>
@@ -46,6 +48,14 @@
   {:else if $gameState.screen === "info"}
     <div transition:slide={{ duration: 200 }} class="screen-wrapper">
       <InfoScreen />
+    </div>
+  {:else if $gameState.screen === "deepDive"}
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <DeepDive />
+    </div>
+  {:else}
+    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+      <NotFound />
     </div>
   {/if}
 </main>

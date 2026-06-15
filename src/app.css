@@ -172,12 +172,33 @@ body {
   gap: 1rem;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(ellipse at center,
-      #5e5e64 0%,
-      #767d75 60%,
-      #a2a2ad 100%
-    );
+  background: radial-gradient(circle at 20% 30%, #2e1a47 0%, #0f0a1c 50%, #07040d 100%);
+  position: relative;
+  overflow: hidden;
   font-family: var(--text-font);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  width: 40vmax;
+  height: 40vmax;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: -1;
+  opacity: 0.15;
+  pointer-events: none;
+}
+body::before {
+  background: var(--color-safe);
+  top: -10%;
+  left: -10%;
+}
+body::after {
+  background: var(--color-success);
+  bottom: -10%;
+  right: -10%;
 }
 
 h1,

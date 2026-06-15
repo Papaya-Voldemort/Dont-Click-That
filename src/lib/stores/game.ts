@@ -1,19 +1,19 @@
-import { writable } from 'svelte/store';
-import { get } from 'svelte/store';
-import { levels } from './levels';
+import { writable } from "svelte/store";
+import { get } from "svelte/store";
+import { levels } from "./levels";
 
 const levelCnt = levels.length;
 
 export const gameState = writable({
-  screen: 'splash',
+  screen: "splash",
   levels: levelCnt,
   currentLv: 0,
   score: 0,
-  lastButtonPressed: '',
+  lastButtonPressed: "",
 });
 
 export function updateScreen(screenName: string) {
-  gameState.update(state => ({ ...state, screen: screenName }));
+  gameState.update((state) => ({ ...state, screen: screenName }));
 }
 
 export function nextLevel() {
@@ -22,16 +22,17 @@ export function nextLevel() {
     updateScreen("win");
     return;
   }
-  gameState.update(state => ({ ...state, screen: "game"}))
-  gameState.update(state => ({ ...state, currentLv: state.currentLv + 1 }));
+  gameState.update((state) => ({ ...state, screen: "game" }));
+  gameState.update((state) => ({ ...state, currentLv: state.currentLv + 1 }));
 }
 
 export function updateScore(score: number) {
-  gameState.update(state => ({ ...state, score: state.score + score }));
-  console.log(get(gameState).score)
+  gameState.update((state) => ({ ...state, score: state.score + score }));
+  console.log(get(gameState).score);
 }
 
 export function resetGame() {
-  gameState.update(state => ({ ...state, currentLv: 0 }));
-  console.log(get(gameState).currentLv)
+  gameState.update((state) => ({ ...state, currentLv: 0 }));
+  gameState.update((state) => ({ ...state, score: 0 }));
+  console.log(get(gameState).currentLv);
 }

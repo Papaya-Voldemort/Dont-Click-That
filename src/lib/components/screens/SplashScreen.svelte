@@ -12,8 +12,8 @@
   }
 </script>
 
-<Card>
-  <div class="centered">
+<Card noPadding>
+  <div class="centered textured-bg">
     <div class="text">
       <h1 class="title">{name}</h1>
 
@@ -22,17 +22,11 @@
       </p>
     </div>
 
-    <Button variant="success" size="xl" onclick={() => pressBtn("game")}
-      >▶ Start Training</Button
-    >
+    <Button variant="success" size="xl" onclick={() => pressBtn("game")}>▶ Start Training</Button>
 
     <div class="actions">
-      <Button variant="safe" size="md" onclick={() => pressBtn("how")}
-        >How to Play</Button
-      >
-      <Button variant="default" size="md" onclick={() => pressBtn("Gameinfo")}
-        >More Info</Button
-      >
+      <Button variant="safe" size="md" onclick={() => pressBtn("how")}>How to Play</Button>
+      <Button variant="default" size="md" onclick={() => pressBtn("gameInfo")}>More Info</Button>
     </div>
   </div>
 </Card>
@@ -48,6 +42,21 @@
 
     text-align: center;
     gap: var(--content-gap);
+    padding: var(--card-padding);
+    box-sizing: border-box;
+  }
+
+  .textured-bg {
+    background-color: #fafbfc;
+    background-image:
+      radial-gradient(circle at center, transparent 30%, #fafbfc 100%),
+      linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      24px 24px,
+      24px 24px;
+    border-radius: inherit;
   }
 
   .text h1 {

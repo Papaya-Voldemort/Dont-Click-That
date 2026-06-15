@@ -9,9 +9,11 @@ A modern security awareness application built with Svelte and Vite. Clean archit
 I am building this for the **Congressional App Challenge** for the UT-004 region. This is built because I hate getting scammed and want to help stop it all around the world.
 
 ## Deplyoment
+
 This is built and deployed on **Railway Hobby Plan** which I HIGHLY recommend to new devs.
 
 ## File Structure
+
 ```text
 src/
 ├── App.svelte

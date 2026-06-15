@@ -1,7 +1,7 @@
 <script lang="ts">
   import Card from "../core/Card.svelte";
   import { levels } from "../../stores/levels";
-  import { gameState, nextLevel } from "../../stores/game";
+  import { gameState, nextLevel, updateScreen } from "../../stores/game";
   import Button from "../core/Button.svelte";
   import CheckIcon from "../../assets/images/check.svg?raw";
   import ErrorIcon from "../../assets/images/error.svg?raw";
@@ -22,9 +22,7 @@
 
   const correctAnswer = $derived(level?.scoreValues.find((s) => s.value === 1));
   const correctColor = $derived(
-    correctAnswer?.name
-      ? (variantColors[correctAnswer.name] ?? "#999")
-      : "#999",
+    correctAnswer?.name ? (variantColors[correctAnswer.name] ?? "#999") : "#999",
   );
 
   // Dynamic border/accent theme color based on success/failure
@@ -32,6 +30,10 @@
     isCorrect ? "var(--color-safe, #22c55e)" : "var(--color-danger, #ef4444)",
   );
   const text = $derived(scoreObj?.feedback ?? "");
+
+  function deepDive() {
+    updateScreen("deepDive");
+  }
 </script>
 
 <Card>
@@ -59,6 +61,7 @@
           <span class="solution-badge">{correctAnswer.name.toUpperCase()}</span>
         </div>
       {/if}
+      <Button style="margin: 1rem;" onclick={() => deepDive()}>Why?</Button>
     </div>
 
     <div class="button-container">
