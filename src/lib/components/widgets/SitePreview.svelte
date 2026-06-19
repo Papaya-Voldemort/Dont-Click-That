@@ -17,7 +17,7 @@
     <div class="urlBar">
       <span class="protocol">{url.protocol}://</span>
       <span class="subdomain">{url.subdomain ? url.subdomain + "." : ""}</span>
-      <span class="domain">{url.domain}</span>
+      <span class="domain">{url.domain}{url.tld ? "." + url.tld : ""}</span>
     </div>
   </div>
 

@@ -15,7 +15,9 @@
   const correctAnswer = levelData.scoreValues.find((s) => s.value === 1);
   const correctName = correctAnswer?.name ?? "safe";
   const feedback = correctAnswer?.feedback ?? "";
-  $: emailDomain = email?.email.includes("@") ? email.email.split("@")[1] : email?.email;
+  const emailDomain = $derived(
+    email?.email.includes("@") ? email.email.split("@")[1] : email?.email,
+  );
 
   function goBack() {
     updateScreen("info");
@@ -33,11 +35,13 @@
       {#if contentType === "url" && url}
         <div class="url-analysis">
           <div class="url-bar-styled">
-            <span class="part fprotocol">{url.protocol}://</span>
+            <span class="part protocol">{url.protocol}://</span>
             {#if url.subdomain}
               <span class="part subdomain">{url.subdomain}.</span>
             {/if}
-            <span class="part domain" class:flagged={correctName !== "safe"}>{url.domain}</span>
+            <span class="part domain" class:flagged={correctName !== "safe"}
+              >{url.domain}{url.tld ? "." + url.tld : ""}</span
+            >
           </div>
 
           <div class="breakdown">
@@ -69,7 +73,7 @@
 
               <div class="breakdown-item">
                 <span class="term domain" class:flagged={correctName !== "safe"}>Domain Name</span>
-                <span class="value"><code>{url.domain}</code></span>
+                <span class="value"><code>{url.domain}{url.tld ? "." + url.tld : ""}</code></span>
                 <span class="desc">
                   The actual, registered owner of the site. This is the only part that guarantees
                   who you are talking to.
@@ -100,6 +104,12 @@
               <span class="label">Subject:</span>
               <span class="val subject">{email.subject}</span>
             </div>
+            {#if email.preview}
+              <div class="email-row">
+                <span class="label">Message:</span>
+                <span class="val preview">{email.preview}</span>
+              </div>
+            {/if}
           </div>
 
           <div class="breakdown">
@@ -308,6 +318,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    max-height: 180px;
+    overflow-y: auto;
   }
 
   .email-row {
@@ -344,7 +356,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    max-height: 250px;
+    max-height: 180px;
     overflow-y: auto;
   }
 
@@ -356,7 +368,7 @@
     line-height: 1.4;
     align-self: flex-end;
     background-color: var(--color-success, #58cc02);
-    color: var(--text-inverted, #ffffff);
+    color: var(--text-main);
   }
 
   .msg-bubble.incoming {

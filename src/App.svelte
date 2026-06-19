@@ -18,10 +18,7 @@
 
 <svelte:head>
   <title>Don't Click That</title>
-  <meta
-    name="description"
-    content="Don't Click That - Security Awareness App"
-  />
+  <meta name="description" content="Don't Click That - Security Awareness App" />
 </svelte:head>
 
 <main>

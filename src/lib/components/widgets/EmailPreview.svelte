@@ -219,43 +219,4 @@
   .email-body p:last-child {
     margin-bottom: 0;
   }
-
-  @media (prefers-color-scheme: dark) {
-    .email {
-      background: #1f2937;
-      border-color: #374151;
-    }
-
-    .subject {
-      color: #f9fafb;
-    }
-    .tag-inbox {
-      background: #374151;
-      color: #d1d5db;
-    }
-    .sender-name {
-      color: #f9fafb;
-    }
-    .sender-email {
-      color: #9ca3af;
-    }
-    .to-line {
-      color: #6b7280;
-    }
-    .time {
-      color: #6b7280;
-    }
-    .email-body {
-      color: #d1d5db;
-    }
-    .email-meta {
-      border-bottom-color: #374151;
-    }
-    .action-btn {
-      color: #9ca3af;
-    }
-    .action-btn:hover {
-      background: #374151;
-    }
-  }
 </style>
