@@ -2,6 +2,8 @@
 
 A modern security awareness application built with Svelte and Vite. Clean architecture, optimized workflow, and developer-friendly structure.
 
+> A Note on AI Usage: Some AI was used for this project, mostly to test UI and UX for the target users.
+
 ---
 
 ## Why?
