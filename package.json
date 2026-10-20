@@ -7,14 +7,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "film": "bun run validate && bun run preview -- --host 127.0.0.1 --port 4173 --strictPort",
     "build": "vite build",
     "preview": "vite preview",
     "start": "NODE_ENV=production bun server.js",
     "check": "svelte-check --tsconfig ./jsconfig.json",
     "type-check": "bun run check",
+    "test": "bun test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate": "bun run format:check && bun run type-check && bun run build"
+    "validate": "bun run format:check && bun run type-check && bun run test && bun run build"
   },
   "keywords": [
     "svelte",
@@ -27,6 +29,7 @@
     "@types/bun": "latest",
     "prettier": "^3.8.4",
     "prettier-plugin-svelte": "^4.1.1",
+    "puppeteer-core": "^25.8.0",
     "svelte": "^5.55.5",
     "svelte-check": "^4.1.4",
     "typescript": "^5",

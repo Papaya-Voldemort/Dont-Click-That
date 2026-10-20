@@ -2,19 +2,20 @@
   import Card from "../core/Card.svelte";
   import Button from "../core/Button.svelte";
   import { gameState, nextLevel, updateScreen } from "../../stores/game";
-  import { levels } from "../../stores/levels";
   import type { url as UrlType, email as EmailType, text as TextType } from "../../stores/levels";
 
-  const levelData = levels[$gameState.currentLv];
-  const contentType = levelData.contentType;
+  const levelData = $derived($gameState.challenges[$gameState.currentLv]);
+  const contentType = $derived(levelData?.contentType);
 
-  const url = contentType === "url" ? (levelData.content as UrlType) : null;
-  const email = contentType === "email" ? (levelData.content as EmailType) : null;
-  const textMessages = contentType === "text" ? (levelData.content as TextType[]) : null;
+  const url = $derived(contentType === "url" ? (levelData?.content as UrlType) : null);
+  const email = $derived(contentType === "email" ? (levelData?.content as EmailType) : null);
+  const textMessages = $derived(contentType === "text" ? (levelData?.content as TextType[]) : null);
 
-  const correctAnswer = levelData.scoreValues.find((s) => s.value === 1);
-  const correctName = correctAnswer?.name ?? "safe";
-  const feedback = correctAnswer?.feedback ?? "";
+  const correctAnswer = $derived(levelData?.scoreValues.find((s) => s.value === 1));
+  const correctName = $derived(correctAnswer?.name ?? "safe");
+  const feedback = $derived(correctAnswer?.feedback ?? "");
+  const isLastLevel = $derived($gameState.currentLv >= $gameState.levels - 1);
+
   const emailDomain = $derived(
     email?.email.includes("@") ? email.email.split("@")[1] : email?.email,
   );
@@ -24,7 +25,7 @@
   }
 </script>
 
-<Card>
+<Card fitContent maxWidth="70rem">
   <div class="deep-dive-container">
     <div class="header">
       <h1>Deep Dive Analysis</h1>
@@ -42,6 +43,7 @@
             <span class="part domain" class:flagged={correctName !== "safe"}
               >{url.domain}{url.tld ? "." + url.tld : ""}</span
             >
+            {#if url.path}<span class="part">{url.path}</span>{/if}
           </div>
 
           <div class="breakdown">
@@ -51,9 +53,11 @@
                 <span class="term protocol">Protocol</span>
                 <span class="value"><code>{url.protocol}://</code></span>
                 <span class="desc">
-                  Uses encryption to secure the connection.
-                  <strong class="warning-text">Crucial:</strong> Today, almost all phishing sites
-                  also use HTTPS. It does <em>not</em> guarantee a site is safe!
+                  {url.protocol === "https"
+                    ? "HTTPS encrypts the connection."
+                    : "HTTP does not encrypt the connection."}
+                  <strong class="warning-text">Remember:</strong> Phishing sites can also use HTTPS.
+                  Encryption does <em>not</em> guarantee a site is trustworthy.
                 </span>
               </div>
 
@@ -75,8 +79,8 @@
                 <span class="term domain" class:flagged={correctName !== "safe"}>Domain Name</span>
                 <span class="value"><code>{url.domain}{url.tld ? "." + url.tld : ""}</code></span>
                 <span class="desc">
-                  The actual, registered owner of the site. This is the only part that guarantees
-                  who you are talking to.
+                  The registered domain identifies the website you are visiting. Compare the whole
+                  domain with a known address; a familiar name in a subdomain does not prove trust.
                   {#if correctName !== "safe"}
                     Here, it is fake or spoofed (e.g. lookalike letters or wrong domains).
                   {:else}
@@ -107,7 +111,7 @@
             {#if email.preview}
               <div class="email-row">
                 <span class="label">Message:</span>
-                <span class="val preview">{email.preview}</span>
+                <span class="val preview">{email.body || email.preview}</span>
               </div>
             {/if}
           </div>
@@ -132,11 +136,12 @@
                 <span class="desc">
                   Check the domain after the <code>@</code> symbol.
                   {#if correctName !== "safe"}
-                    Notice the subtle typo or mismatch. Real companies will never send official
-                    alerts from non-official domains.
+                    Compare it with a known address and inspect the request. A mismatch or an
+                    unexpected demand is a reason to verify through a trusted channel.
                   {:else}
                     This matches the official company domain.
                   {/if}
+                  Displayed sender addresses can be spoofed, so a matching domain alone is not proof.
                 </span>
               </div>
             </div>
@@ -166,9 +171,8 @@
               <div class="breakdown-item">
                 <span class="term link">Suspicious Links</span>
                 <span class="desc">
-                  Smishing texts contain links designed to steal your credentials or install
-                  malware. Always verify the domain name or contact the sender through official
-                  channels.
+                  Smishing texts may use deceptive links or ask for money, gift cards, or
+                  verification codes. Check unexpected requests through a channel you already trust.
                 </span>
               </div>
             </div>
@@ -195,15 +199,17 @@
           class:sus={correctName === "sus"}
           class:threat={correctName === "threat"}
         >
-          {correctName.toUpperCase()}
+          {correctName === "sus" ? "SUSPICIOUS" : correctName.toUpperCase()}
         </span>
       </div>
       <p class="feedback-text">{feedback}</p>
     </div>
 
     <div class="footer">
-      <Button variant="default" onclick={goBack}>Return to Game</Button>
-      <Button variant="safe" onclick={nextLevel}>Next Level</Button>
+      <Button variant="default" size="md" onclick={goBack}>← Back</Button>
+      <Button variant="safe" size="md" onclick={nextLevel}>
+        {isLastLevel ? "Finish Training 🏆" : "Next →"}
+      </Button>
     </div>
   </div>
 </Card>
@@ -212,9 +218,7 @@
   .deep-dive-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    min-height: 0;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .header {
@@ -263,25 +267,23 @@
   }
 
   .content-display {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    padding-right: 0.5rem;
+    width: 100%;
   }
 
-  /* URL styling */
   .url-bar-styled {
     display: flex;
     align-items: center;
-    padding: 0.85rem 1.25rem;
+    padding: clamp(0.4rem, 1.8vw, 0.85rem) clamp(0.6rem, 2vw, 1.25rem);
     background-color: var(--bg-subtle, #f9f9f9);
     border: 2px solid var(--card-border, #e5e7eb);
     border-radius: 12px;
     font-family: var(--mono-font, monospace);
-    font-size: 1.05rem;
-    margin-bottom: 1.5rem;
+    font-size: clamp(0.78rem, 2.2vw, 1.05rem);
+    margin-bottom: 1.25rem;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
     overflow-x: auto;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .part.protocol {
@@ -318,13 +320,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 180px;
-    overflow-y: auto;
   }
 
   .email-row {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
   .email-row .label {
@@ -336,6 +337,7 @@
 
   .email-row .val {
     color: var(--text-dark-high, #1f2937);
+    word-break: break-word;
   }
 
   .email-row .address.flagged {
@@ -344,6 +346,12 @@
     background-color: color-mix(in srgb, var(--color-danger, #ff4b4b) 15%, transparent);
     padding: 0 4px;
     border-radius: 4px;
+  }
+
+  @media (min-width: 480px) {
+    .email-row {
+      flex-direction: row;
+    }
   }
 
   /* Text analysis bubble styling */
@@ -356,8 +364,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    max-height: 180px;
-    overflow-y: auto;
   }
 
   .msg-bubble {
@@ -389,17 +395,19 @@
   .breakdown h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.75rem 0;
     color: var(--text-dark-high, #1f2937);
   }
 
   .breakdown-grid {
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .breakdown-item {
+    min-width: 0;
+    overflow-wrap: anywhere;
     background: transparent;
     border: 1px solid var(--card-border, #e5e7eb);
     border-radius: 8px;
@@ -408,6 +416,17 @@
     flex-direction: column;
     gap: 0.35rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  @media (min-width: 640px) {
+    .breakdown-grid {
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    .breakdown-item {
+      flex: 1;
+    }
   }
 
   .term {
@@ -491,8 +510,8 @@
   .footer {
     display: flex;
     justify-content: space-between;
-    margin-top: auto;
     padding-top: 0.5rem;
+    gap: 1rem;
   }
 
   code {
@@ -501,5 +520,22 @@
     padding: 0.1rem 0.3rem;
     border-radius: 4px;
     font-size: 0.85rem;
+  }
+
+  @media (max-height: 500px) and (orientation: landscape) {
+    .deep-dive-container {
+      gap: 0.75rem;
+    }
+
+    .url-bar-styled,
+    .email-bar-styled,
+    .text-bar-styled {
+      margin-bottom: 0.75rem;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .feedback-section {
+      padding: 0.5rem 0.75rem;
+    }
   }
 </style>

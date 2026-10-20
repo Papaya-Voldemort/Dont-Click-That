@@ -1,15 +1,11 @@
 <script lang="ts">
   import Button from "../core/Button.svelte";
   import Card from "../core/Card.svelte";
-  import { updateScreen } from "../../stores/game";
+  import { startGame, updateScreen } from "../../stores/game";
 
   const name = "Don't Click That!";
   const subtitle =
     "Train yourself to spot phishing links, scam emails, and suspicious messages through quick interactive challenges.";
-
-  function pressBtn(screen: string) {
-    updateScreen(screen);
-  }
 </script>
 
 <Card noPadding>
@@ -22,12 +18,16 @@
       </p>
     </div>
 
-    <Button variant="success" size="xl" onclick={() => pressBtn("game")}>▶ Start Training</Button>
+    <Button variant="success" size="xl" onclick={() => startGame()}>▶ Start Training</Button>
+    <p class="session-note">15 challenges · New examples each session</p>
 
     <div class="actions">
-      <Button variant="safe" size="md" onclick={() => pressBtn("how")}>How to Play</Button>
-      <Button variant="default" size="md" onclick={() => pressBtn("gameInfo")}>More Info</Button>
+      <Button variant="safe" size="md" onclick={() => startGame("demo")}>▶ Quick Demo</Button>
+      <Button variant="default" size="md" onclick={() => updateScreen("how")}>How to Play</Button>
+      <Button variant="default" size="md" onclick={() => updateScreen("gameInfo")}>More Info</Button
+      >
     </div>
+    <p class="session-note">Quick Demo: 3 examples of links, emails, and texts</p>
   </div>
 </Card>
 
@@ -88,10 +88,19 @@
 
   @media (min-width: 640px) {
     .actions {
+      flex-wrap: wrap;
+    }
+    .actions {
       flex-direction: row;
       justify-content: center;
       width: auto;
     }
+  }
+
+  .session-note {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
   }
 
   @media (max-height: 500px) and (orientation: landscape) {

@@ -9,11 +9,19 @@
   import InfoScreen from "./lib/components/screens/InfoScreen.svelte";
 
   import { gameState } from "./lib/stores/game";
-  import { levels } from "./lib/stores/levels";
+  import { fade } from "svelte/transition";
+  import { tick } from "svelte";
 
-  import { slide } from "svelte/transition";
-
-  const currentLevel = levels[$gameState.currentLv];
+  let main;
+  $effect(() => {
+    const screen = $gameState.screen;
+    tick().then(() => {
+      if ($gameState.screen === screen) {
+        main?.focus({ preventScroll: true });
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
+    });
+  });
 </script>
 
 <svelte:head>
@@ -21,37 +29,37 @@
   <meta name="description" content="Don't Click That - Security Awareness App" />
 </svelte:head>
 
-<main>
+<main bind:this={main} tabindex="-1">
   {#if $gameState.screen === "splash"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <SplashScreen />
     </div>
   {:else if $gameState.screen === "game"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <GameScreen />
     </div>
   {:else if $gameState.screen === "how"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <HowToPlay />
     </div>
   {:else if $gameState.screen === "gameInfo"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <Info />
     </div>
   {:else if $gameState.screen === "win"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <WinScreen />
     </div>
   {:else if $gameState.screen === "info"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <InfoScreen />
     </div>
   {:else if $gameState.screen === "deepDive"}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <DeepDive />
     </div>
   {:else}
-    <div transition:slide={{ duration: 200 }} class="screen-wrapper">
+    <div in:fade={{ duration: 160 }} class="screen-wrapper">
       <NotFound />
     </div>
   {/if}

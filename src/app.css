@@ -65,20 +65,21 @@
   --action-gap: 0.75rem;
   --text-margin: 2rem;
   --card-height: 90vh;
+  --viewport-gutter: clamp(0.5rem, 2vw, 1.5rem);
 }
 
 /* Small Phone */
 @media (max-width: 360px) {
   :root {
-    --heading-size: 1.75rem;
-    --subtitle-size: 0.9rem;
+    --heading-size: 1.6rem;
+    --subtitle-size: 0.85rem;
     --card-padding: 1rem;
-    --text-margin: 0.75rem;
+    --text-margin: 0.5rem;
     --card-height: auto;
 
-    --btn-padding-y: 12px;
-    --btn-padding-x: 14px;
-    --btn-font-size: 0.85rem;
+    --btn-padding-y: 10px;
+    --btn-padding-x: 10px;
+    --btn-font-size: 0.8rem;
     --btn-width: 100%;
   }
 }
@@ -86,33 +87,33 @@
 /* Normal Mobile Sizes */
 @media (min-width: 361px) and (max-width: 639px) {
   :root {
-    --heading-size: 2.25rem;
-    --subtitle-size: 1rem;
-    --card-padding: 1.5rem;
-    --text-margin: 1rem;
+    --heading-size: 2.1rem;
+    --subtitle-size: 0.95rem;
+    --card-padding: 1.25rem;
+    --text-margin: 0.85rem;
     --card-height: auto;
 
-    --btn-padding-y: 14px;
-    --btn-padding-x: 16px;
-    --btn-font-size: 0.9rem;
+    --btn-padding-y: 12px;
+    --btn-padding-x: 14px;
+    --btn-font-size: 0.875rem;
     --btn-width: 100%;
   }
 }
 
-/* Mobile Landscape - Fit content without scrolling */
+/* Mobile Landscape - Fit content cleanly */
 @media (max-height: 500px) and (orientation: landscape) {
   :root {
-    --heading-size: 1.3rem;
-    --subtitle-size: 0.9rem;
-    --card-padding: 0.4rem;
-    --content-gap: 0.35rem;
-    --action-gap: 0.3rem;
+    --heading-size: 1.25rem;
+    --subtitle-size: 0.85rem;
+    --card-padding: 0.5rem;
+    --content-gap: 0.25rem;
+    --action-gap: 0.25rem;
     --text-margin: 0;
     --card-height: auto;
 
-    --btn-padding-y: 8px;
+    --btn-padding-y: 6px;
     --btn-padding-x: 10px;
-    --btn-font-size: 0.8rem;
+    --btn-font-size: 0.78rem;
     --btn-width: 100%;
   }
 }
@@ -120,11 +121,11 @@
 /* Tablet Sizes */
 @media (min-width: 640px) and (max-width: 1024px) {
   :root {
-    --heading-size: 3.25rem;
+    --heading-size: 3rem;
     --subtitle-size: 1.15rem;
     --card-padding: 1.75rem;
-    --text-margin: 1.5rem;
-    --card-height: 90vh;
+    --text-margin: 1.25rem;
+    --card-height: auto;
 
     --btn-padding-y: 14px;
     --btn-padding-x: 20px;
@@ -136,11 +137,11 @@
 /* Normal Desktop */
 @media (min-width: 1025px) and (max-width: 1440px) {
   :root {
-    --heading-size: 4.5rem;
+    --heading-size: 4rem;
     --subtitle-size: 1.25rem;
     --card-padding: 2.25rem;
-    --text-margin: 2rem;
-    --card-height: 90vh;
+    --text-margin: 1.75rem;
+    --card-height: auto;
 
     --btn-padding-y: 16px;
     --btn-padding-x: 24px;
@@ -152,11 +153,11 @@
 /* Big Desktop */
 @media (min-width: 1441px) {
   :root {
-    --heading-size: 5.5rem;
-    --subtitle-size: 1.4rem;
-    --card-padding: 2.75rem;
+    --heading-size: 4.75rem;
+    --subtitle-size: 1.35rem;
+    --card-padding: 2.5rem;
     --text-margin: 2rem;
-    --card-height: 90vh;
+    --card-height: auto;
 
     --btn-padding-y: 18px;
     --btn-padding-x: 28px;
@@ -167,21 +168,46 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
-  gap: 1rem;
   justify-content: center;
   align-items: center;
+  padding: var(--viewport-gutter);
+  box-sizing: border-box;
   background: radial-gradient(circle at 20% 30%, #2e1a47 0%, #0f0a1c 50%, #07040d 100%);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-family: var(--text-font);
+}
+
+#app {
+  width: 100%;
+  min-width: 0;
+}
+
+main,
+.screen-wrapper {
+  width: 100%;
+}
+
+main:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body::before,
 body::after {
   content: "";
-  position: absolute;
+  position: fixed;
   width: 40vmax;
   height: 40vmax;
   border-radius: 50%;
@@ -192,13 +218,15 @@ body::after {
 }
 body::before {
   background: var(--color-safe);
-  top: -10%;
-  left: -10%;
+  top: 0;
+  left: 0;
+  transform: translate(-30%, -30%);
 }
 body::after {
   background: var(--color-success);
-  bottom: -10%;
-  right: -10%;
+  bottom: 0;
+  right: 0;
+  transform: translate(30%, 30%);
 }
 
 h1,
@@ -209,12 +237,10 @@ h5 {
   font-family: var(--display-font);
 }
 
-/* Landscape mode - natural flow, allow scrolling */
+/* Landscape mode */
 @media (max-height: 500px) and (orientation: landscape) {
   body {
-    min-height: 100vh;
-    padding: 0;
-    justify-content: center;
+    --viewport-gutter: 0.35rem;
     align-items: center;
   }
 }

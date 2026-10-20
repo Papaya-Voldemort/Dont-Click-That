@@ -47,7 +47,6 @@
 
     min-height: 44px;
     min-width: 44px;
-    cursor: pointer;
   }
 
   .btn-top {
@@ -114,6 +113,7 @@
   .btn[data-variant="warn"] {
     --current-bg: var(--color-warn);
     --current-shadow: var(--color-warn-dark);
+    --current-text: var(--text-dark-high);
   }
 
   .btn[data-variant="danger"] {
@@ -156,17 +156,17 @@
   }
 
   .btn[data-size="xl"] {
-    --btn-padding-y: 32px;
-    --btn-padding-x: 64px;
-    --btn-font-size: 2rem;
-    --btn-depth: 10px;
+    --btn-padding-y: clamp(16px, 3vh, 28px);
+    --btn-padding-x: clamp(24px, 5vw, 48px);
+    --btn-font-size: clamp(1.2rem, 3vw, 1.8rem);
+    --btn-depth: clamp(4px, 1vw, 8px);
   }
 
   .btn[data-size="grade"] {
-    --btn-padding-y: clamp(0.9rem, 2.4vw, 1.4rem);
-    --btn-padding-x: clamp(0.75rem, 2vw, 1.25rem);
-    --btn-font-size: clamp(0.95rem, 1.8vw, 1.5rem);
-    --btn-depth: clamp(3px, 0.8vw, 8px);
+    --btn-padding-y: clamp(0.75rem, 2vw, 1.25rem);
+    --btn-padding-x: clamp(0.35rem, 1.5vw, 1rem);
+    --btn-font-size: clamp(0.78rem, 1.6vw, 1.35rem);
+    --btn-depth: clamp(3px, 0.6vw, 6px);
   }
 
   /* Focus states */

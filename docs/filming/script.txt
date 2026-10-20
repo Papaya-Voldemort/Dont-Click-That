@@ -1,0 +1,19 @@
+Hi, I'm [YOUR NAME], and this is Don't Click That!
+
+Don't Click That helps people practice spotting phishing links, scam emails, and suspicious texts before they click.
+
+I wanted to turn scam awareness into something you can actually practice. It's designed for everyday internet users, especially families and older adults, with short challenges and clear explanations.
+
+The full training has fifteen challenges across links, emails, and texts, moving from easier to harder examples. For this walkthrough, I'll use the three-example Quick Demo. In each challenge, you choose Safe, Suspicious, or Threat.
+
+This link includes paypal dot com, so it looks familiar. But the actual domain is login dash verify dot example. I'll mark it as a Threat.
+
+The app immediately explains the answer. Opening Deep Dive breaks down the address and highlights the domain. It also explains that HTTPS encrypts a connection but doesn't prove a website is trustworthy.
+
+Next is a statement email. It tells you to open the banking app you already use and doesn't ask for passwords or payment details. That's why Safe is the best answer for this example. A sender address by itself doesn't prove authenticity.
+
+Finally, this wrong-number text tries to keep the conversation going. I'll choose Suspicious, because it's a warning sign even though there's no direct request for money yet.
+
+The results show my score and separate correct answers, partial credit, and missed answers. I can replay to keep practicing.
+
+I built this browser app with Svelte, TypeScript, JavaScript, HTML, and CSS. Vite builds the app, and Bun runs the development tools. My goal is simple: help people pause and check before they click.

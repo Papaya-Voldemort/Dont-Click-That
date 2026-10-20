@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.playwright-mcp/
 .svelte-kit/
 package-lock.json
 bun.lock

@@ -86,11 +86,13 @@ const typoMap: Record<string, string[]> = {
 
 export function makeURL(): url {
   const randomIndex = Math.floor(Math.random() * safeURLs.length);
-  const randomURL = safeURLs[randomIndex];
+  return parseURL(safeURLs[randomIndex]);
+}
 
-  const protocol = randomURL.startsWith("https") ? "https" : "http";
-
-  const hostname = randomURL.split("://")[1].split("/")[0];
+export function parseURL(value: string): url {
+  const parsed = new URL(value);
+  const protocol = parsed.protocol === "https:" ? "https" : "http";
+  const hostname = parsed.hostname;
   const parts = hostname.split(".");
 
   let subdomain = "";
@@ -103,7 +105,7 @@ export function makeURL(): url {
   const tld = parts.slice(-tldPartsCount).join(".");
 
   if (parts.length <= domainPartsCount) {
-    subdomain = "www";
+    subdomain = "";
     domain = parts.slice(-domainPartsCount, -tldPartsCount).join(".");
   } else {
     subdomain = parts.slice(0, -domainPartsCount).join(".");
@@ -115,18 +117,16 @@ export function makeURL(): url {
     subdomain,
     domain,
     tld,
+    path: parsed.pathname === "/" ? "" : parsed.pathname,
   };
 }
 
 export function generateURLLevel(difficulty: "easy" | "intermediate" | "hard"): level {
-  const randomURL = safeURLs[Math.floor(Math.random() * safeURLs.length)];
-  const hostname = randomURL.split("://")[1].split("/")[0];
-  const parts = hostname.split(".");
+  const originalURL = makeURL();
+  const originalBrand = originalURL.domain;
+  const originalTld = originalURL.tld;
 
-  const originalBrand = parts.length > 2 ? parts[1] : parts[0];
-  const originalTld = parts.slice(-1)[0];
-
-  let subdomain = "www";
+  let subdomain = originalURL.subdomain;
   let domain = originalBrand;
   let tld = originalTld;
   let scenario: "legit" | "typo" | "spoof" = "legit";
@@ -142,18 +142,29 @@ export function generateURLLevel(difficulty: "easy" | "intermediate" | "hard"): 
   }
 
   if (scenario === "typo") {
+    let mutated = false;
     if (Math.random() > 0.5) {
       domain = originalBrand + originalBrand.slice(-1);
+      mutated = true;
     } else {
       const chars = originalBrand.split("");
       for (let i = 0; i < chars.length; i++) {
         if (typoMap[chars[i]]) {
           const options = typoMap[chars[i]];
           chars[i] = options[Math.floor(Math.random() * options.length)];
+          mutated = true;
           break;
         }
       }
-      domain = chars.join("");
+      if (mutated) {
+        domain = chars.join("");
+      } else {
+        // Fallback for short or unmapped brand names
+        domain =
+          originalBrand.length > 2
+            ? originalBrand + originalBrand.slice(-1)
+            : originalBrand + "-online";
+      }
     }
   } else if (scenario === "spoof") {
     // Push real brand to subdomain, switch root domain to something malicious
@@ -173,7 +184,7 @@ export function generateURLLevel(difficulty: "easy" | "intermediate" | "hard"): 
       {
         name: "safe",
         value: 1,
-        feedback: `Spot on! This is the exact official website structure for ${originalBrand}. You're completely safe.`,
+        feedback: `Correct! This example matches the known address ${originalBrand}.${originalTld}. Always compare the whole domain; HTTPS alone is not proof of trust.`,
       },
       {
         name: "sus",
@@ -234,6 +245,7 @@ export function generateURLLevel(difficulty: "easy" | "intermediate" | "hard"): 
       subdomain,
       domain,
       tld,
+      path: originalURL.path,
     },
     scoreValues,
   };

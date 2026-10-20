@@ -22,6 +22,9 @@
   }
 
   h1 {
-    font-size: 4rem;
+    font-size: clamp(1.6rem, 5vw, 3.5rem);
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+    color: var(--text-brand-dark);
   }
 </style>

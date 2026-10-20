@@ -1,27 +1,34 @@
 <script lang="ts">
   import Button from "../core/Button.svelte";
   import Card from "../core/Card.svelte";
-  import { updateScreen, gameState, resetGame } from "../../stores/game";
+  import { gameState, resetGame } from "../../stores/game";
 
-  const score = $gameState.score;
-  const outOf = $gameState.levels;
-  const percent = Math.round((score / outOf) * 100);
-  const missed = outOf - score;
-  const resultMessage =
+  const score = $derived($gameState.score);
+  const outOf = $derived($gameState.levels);
+  const percent = $derived(outOf > 0 ? Math.round((score / outOf) * 100) : 0);
+  const correct = $derived($gameState.answers.filter((answer) => answer.value === 1).length);
+  const partial = $derived($gameState.answers.filter((answer) => answer.value === 0.5).length);
+  const missed = $derived($gameState.answers.filter((answer) => answer.value === 0).length);
+  const formattedScore = $derived(Number.isInteger(score) ? `${score}` : score.toFixed(1));
+
+  const resultMessage = $derived(
     percent === 100
-      ? "Perfect score — you spotted every threat."
+      ? "Perfect score — you classified every example correctly."
       : percent >= 70
         ? "Nice work — your scam radar is getting sharper."
-        : "You finished the training — replay to sharpen your instincts.";
+        : "You finished the training — replay to sharpen your instincts.",
+  );
 </script>
 
 <Card noPadding>
   <div class="main textured-bg">
-    <div class="badge">Training Complete</div>
+    <div class="badge">
+      {$gameState.mode === "demo" ? "Quick Demo Complete" : "Training Complete"}
+    </div>
 
     <div class="hero">
-      <div class="score-ring" aria-label="Final score {score} out of {outOf}">
-        <span>{score}</span>
+      <div class="score-ring" aria-label="Final score {formattedScore} out of {outOf}">
+        <span>{formattedScore}</span>
         <small>/{outOf}</small>
       </div>
 
@@ -34,11 +41,15 @@
     <div class="stats" aria-label="Training results">
       <div>
         <strong>{percent}%</strong>
-        <span>Accuracy</span>
+        <span>Score</span>
       </div>
       <div>
-        <strong>{score}</strong>
+        <strong>{correct}</strong>
         <span>Correct</span>
+      </div>
+      <div>
+        <strong>{partial}</strong>
+        <span>Partial credit</span>
       </div>
       <div>
         <strong>{missed}</strong>
@@ -46,16 +57,11 @@
       </div>
     </div>
 
-    <p class="takeaway">Keep questioning links, senders, and anything that feels urgent or too good to be true.</p>
+    <p class="takeaway">
+      Keep questioning links, senders, and anything that feels urgent or too good to be true.
+    </p>
 
-    <Button
-      variant="success"
-      size="lg"
-      onclick={() => {
-        updateScreen("splash");
-        resetGame();
-      }}>Play Again</Button
-    >
+    <Button variant="success" size="lg" onclick={() => resetGame()}>Play Again</Button>
   </div>
 </Card>
 
@@ -155,7 +161,7 @@
 
   .stats {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.75rem;
     width: min(620px, 100%);
   }
@@ -189,6 +195,9 @@
   }
 
   @media (max-width: 639px) {
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .hero {
       flex-direction: column;
     }
